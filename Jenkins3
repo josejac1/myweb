@@ -1,13 +1,22 @@
 pipeline{
-   agent any
+    agent any
+    environment{
+        PATH ="/opt/maven/maven:$PATH"
+    }
     stages
          {
-          stage("GIT Checkout"){
+
+        stage("Welcome"){
             steps
             {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/javahometech/myweb.git']]])
+                echo "welcome to jenkins declarative pipeline"
             }
-         }
+        }
+        stage("Maven Build"){
+            steps{
+                sh "mvn clean  package"
+            }
+        }
 
-       }
+         }
 }
